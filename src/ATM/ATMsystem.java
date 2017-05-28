@@ -1,4 +1,4 @@
-package ATM;
+package  ATM;
 
 import java.util.*;
 import java.text.SimpleDateFormat;
@@ -13,63 +13,83 @@ class ATM {                 //提款機類別
     String key_pw = " ";  //輸入密碼
     int getMoney = 0; //提款金額
     int saveMoney = 0; //存款金額
-   
+    boolean loginsuccess = false;
   
+    java.util.Scanner s ;
+    
+    public ATM(Scanner keyin){
+    	s = keyin;
+    }
 
-    java.util.Scanner s = new java.util.Scanner(System.in);
-
-    public void Key_in() {      //帳號密碼輸入介面
+    public String Key_in(String key_id,String key_pw) {      //密碼輸入介面
         int count = 0;   //錯誤計數器
         
         do {
             System.out.print("請輸入帳號：");
-            key_id = s.next();
+            //key_id = s.next();
             System.out.print("請輸入密碼：");
-            key_pw = s.next();
+            //key_pw = s.next();
             
             if (key_id.equals(id) && key_pw.equals(password)) {          //比對密碼是否相同
                 System.out.println("登入成功");
+                loginsuccess = true;
+            	//return "登入成功";
                 Show();
+                
             } else {
                 System.out.print("帳號密碼錯誤!!!\n");
+                
                 count++;                        //密碼比對錯誤count累加一次
+                
+                return "登入錯誤";  
             }
-        } while (count < 3);
+        } while (count == 1);
         
-        if (count == 3) {    //錯3次跳出輸入介面
+       /* if (count == 3) {    //錯3次跳出輸入介面
             System.out.println("密碼錯誤3次，請洽櫃檯人員...");
             try {                 //延遲時間設定
                 Thread.sleep(3000);//延遲3秒
             } catch (InterruptedException ex) {
             }
+       
             use_again();
-        }
+            return "登入錯誤";
+        }*/
+		return "登入成功";
         
     }
 
     //顯示操作頁面
-    public void Show() {
+    public String Show() {
+    	/*if(loginsuccess==false){
+    		return "尚未登入成功";
+    	}*/
         System.out.println("請選擇要使用的功能：");
-        System.out.println("1.提款  2.存款    3.餘額查詢 4.離開");
+        System.out.println("1.提款  2.存款  3.餘額查詢 4.離開");
         switch (s.nextInt()) {
             case 1:
-                this.getMoney();  //呼叫提款功能
-                break;
+                this.getMoney(getMoney);  //呼叫提款功能
+                return "成功";
+                //break;
             case 2:
-                this.saveMoney();  //呼叫存款功能
-                break;
+                this.saveMoney(saveMoney);  //呼叫存款功能
+                return "成功";
+                //break;
             case 3:                     //餘額查詢
                 System.out.println("帳戶還有" + accountMoney + "元。");
                 final_Money();
-                break;
+                return "成功";
+                //break;
             default:
                 System.out.println("謝謝光臨,歡迎再度使用" + "\n");
-                break;
+                
+                return "失敗";
+                //break;
         }
     }
 
     //提款功能
-    public void getMoney() {
+    public int getMoney(int getMoney) {
         System.out.println("請輸入提領金額");
         this.getMoney = s.nextInt();
         System.out.println("您欲提領" + this.getMoney + "元。正確請按1，錯誤請按2");
@@ -77,21 +97,28 @@ class ATM {                 //提款機類別
             case 1:
                 if (accountMoney < getMoney) {
                     System.out.println("餘額不足,無法提領");
+                    //assert accountMoney > getMoney;				//防呆
+                    return -1;
                 	}else if(getMoney < 0){
                 		System.out.println("金額輸入錯誤,無法提領");  //防呆
+                		//assert getMoney > 0;					//防呆
+                		return -1;
                 	} else {
-                    accountMoney -= getMoney;
+                    accountMoney -= this.getMoney;
+                    //return accountMoney;//
                 	}
                 break;
             default:
                 System.out.println("取消提款...");
         }
+       
         getListCheck();
-        use_again();
+        //use_again();
+        return accountMoney;//
     }
 
     //存款功能
-    public void saveMoney() {
+    public int saveMoney(int saveMoney) {
         System.out.print("請輸入存入金額：");
         this.saveMoney = s.nextInt();
         System.out.println("辨鈔中");
@@ -105,16 +132,22 @@ class ATM {                 //提款機類別
         	
         	if(saveMoney < 0){
         		System.out.println("金額輸入錯誤,無法提領"); //防呆
+        		//assert saveMoney > 0;				  //防呆
+        		return -1;
         	}else{
             accountMoney += this.saveMoney;
+            //return accountMoney;
             saveListCheck();
-            use_again();}
+            //use_again();
+             			}
         
         } else {
             System.out.print("取消操作");
         }
+		return accountMoney;
     }
 
+    
 
     //提款交易明細表 
     public void getListCheck() {
@@ -178,6 +211,7 @@ class ATM {                 //提款機類別
         use_again();
     }
 
+   
 
     //餘額查詢明細表 
     public void final_Money() {
@@ -220,10 +254,11 @@ class ATM {                 //提款機類別
     //是否繼續使用
     public void use_again() {
         System.out.println("請選擇是否繼續使用 1:是(請插入金融卡) 2:否");
-        Scanner c = new Scanner(System.in);
-        int choice = c.nextInt();
+        //Scanner s = new Scanner(System.in);
+        int choice = s.nextInt();
         if (choice == 1) {
-            Key_in();
+        	
+            Key_in(key_id,key_pw);
         } else {
         	
         	 try {                 //延遲時間設定
@@ -231,7 +266,7 @@ class ATM {                 //提款機類別
                  Thread.sleep(3000);//延遲3秒
              } catch (InterruptedException ex) {
              }
-        	 Key_in();
+        	 Key_in(key_id,key_pw);
             
             
             
@@ -244,7 +279,14 @@ public class ATMsystem {
 
     public static void main(String[] args) {
         // TODO code application logic here
-        ATM a = new ATM();
-        a.Key_in();
+    	
+    	 String key_id = "1111";  //輸入帳號
+    	 String key_pw = "1234";  //輸入密碼
+    	 int getMoney = 0; //提款金額
+    	 int saveMoney = 0; //存款金額
+    	 Scanner keyin = new java.util.Scanner(System.in);
+    	    
+        ATM a = new ATM(keyin);
+        a.Key_in(key_id,key_pw);
     }
 }
