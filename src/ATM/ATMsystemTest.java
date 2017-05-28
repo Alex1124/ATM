@@ -108,5 +108,7 @@ public class ATMsystemTest {
 			assertEquals(-1,a.saveMoney(-10000)); 				//saveMoney <0
 		}
 		
+		// System.out.println("2017/5/28ª©¥»");
+		
 //-------------------------------*/
 }

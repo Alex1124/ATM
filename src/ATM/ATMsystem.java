@@ -288,5 +288,8 @@ public class ATMsystem {
     	    
         ATM a = new ATM(keyin);
         a.Key_in(key_id,key_pw);
+        
+        System.out.println("2017/5/28ª©¥»");
+        
     }
 }
