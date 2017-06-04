@@ -28,6 +28,7 @@ public class ATMsystemTest {
 		assertEquals("µn¤J¿ù»~",a.Key_in("0","1234"));		//±b¸¹¿ù»~¡A±K½X¥¿½T
 		assertEquals("µn¤J¿ù»~",a.Key_in("1111","0"));		//±b¸¹¥¿½T¡A±K½X¿ù»~
 		assertEquals("µn¤J¿ù»~",a.Key_in("0","0"));		//±b¸¹¿ù»~¡A±K½X¿ù»~
+		assertEquals("µn¤J¿ù»~",a.Key_in("ASA","OUO"));	//¦r¦êÀË´ú
 	
 	}
 
@@ -35,10 +36,10 @@ public class ATMsystemTest {
 	//-----------´£´Ú¥\¯à´ú¸Õ-----------//
 	@Test
 	public void test3() {
-		Scanner keyin = new Scanner("500\n1\n3\n1\n1111\n1234\n");
+		Scanner keyin = new Scanner("1\n1\n3\n1\n1111\n1234\n");
 		a = new ATM(keyin);
 		a.accountMoney = 50000;   
-		assertEquals(49500,a.getMoney(500)); 			//accountMoney > getMoney	
+		assertEquals(49999,a.getMoney(1)); 			//accountMoney > getMoney	
 	}
 	
 	@Test
@@ -96,17 +97,26 @@ public class ATMsystemTest {
 		
 		@Test
 		public void test10() {
+			Scanner keyin = new Scanner("0\n1\n3\n1\n1111\n1234\n");
+			a = new ATM(keyin);
+			assertEquals(50000,a.saveMoney(0)); 				//saveMoney =0
+		}
+		
+		@Test
+		public void test11() {
 			Scanner keyin = new Scanner("5000\n1\n3\n1\n1111\n1234\n");
 			a = new ATM(keyin);
 			assertEquals(55000,a.saveMoney(5000)); 				//saveMoney >0
 		}
 		
 		@Test
-		public void test11() {
+		public void test12() {
 			Scanner keyin = new Scanner("-10000\n1\n");
 			a = new ATM(keyin);
 			assertEquals(-1,a.saveMoney(-10000)); 				//saveMoney <0
 		}
+		
+
 		
 		// System.out.println("2017/5/28ª©¥»");
 		
