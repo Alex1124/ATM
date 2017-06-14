@@ -44,17 +44,7 @@ class ATM {                 //提款機類別
                 return "登入錯誤";  
             }
         } while (count == 1);
-        
-       /* if (count == 3) {    //錯3次跳出輸入介面
-            System.out.println("密碼錯誤3次，請洽櫃檯人員...");
-            try {                 //延遲時間設定
-                Thread.sleep(3000);//延遲3秒
-            } catch (InterruptedException ex) {
-            }
-       
-            use_again();
-            return "登入錯誤";
-        }*/
+      
 		return "登入成功";
         
     }
