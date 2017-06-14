@@ -44,14 +44,26 @@ public class ATMsystemTest {
 	
 	@Test
 	public void test4() {
+		Scanner keyin = new Scanner("1\n1\n1\n1\n1111\n1234\n");
+		a = new ATM(keyin);
+		a.accountMoney = 50000;   
+		assertEquals(49999,a.getMoney(1)); 			//accountMoney > getMoney	
+	}
+	
+	
+	
+	@Test
+	public void test5() {
 		Scanner keyin = new Scanner("50000\n1\n3\n1\n1111\n1234\n");
 		a = new ATM(keyin);
 		a.accountMoney = 50000;   
 		assertEquals(0,a.getMoney(50000)); 				//accountMoney == getMoney
 	}
 	
+	
+	
 	@Test
-	public void test5() {
+	public void test6() {
 		Scanner keyin = new Scanner("50001\n1\n3\n1\n1111\n1234\n");
 		a = new ATM(keyin);
 		a.accountMoney = 50000;    
@@ -59,7 +71,7 @@ public class ATMsystemTest {
 	}
 	
 	@Test
-	public void test6() {
+	public void test7() {
 		Scanner keyin = new Scanner("-10000\n1\n3\n1\n1111\n1234\n");
 		a = new ATM(keyin);
 		a.accountMoney = 50000;    
@@ -67,16 +79,27 @@ public class ATMsystemTest {
 	}
 	
 	
+	
+	
 	//-----------功能列表測試-----------//
 		@Test
-		public void test7() {
+		public void test8() {
 			Scanner keyin = new Scanner("1\n500\n1\n3\n1\n1111\n1234\n");
 			a = new ATM(keyin);
 			assertEquals("成功",a.Show()); 				//輸入 1~4
 		}
+		
+		@Test
+		public void test9() {
+			Scanner keyin = new Scanner("2\n500\n1\n3\n1\n1111\n1234\n");
+			a = new ATM(keyin);
+			assertEquals("成功",a.Show()); 				//輸入 1~4
+		}
+		
+		
 																								
 		@Test
-		public void test8() {
+		public void test10() {
 			Scanner keyin = new Scanner("10\n-1\n");
 			a = new ATM(keyin);
 			assertEquals("失敗",a.Show()); 				//輸入 >4
@@ -84,8 +107,17 @@ public class ATMsystemTest {
 		}
 		
 		@Test
-		public void test9() {
+		public void test11() {
 			Scanner keyin = new Scanner("3\n3\n2\n4\n");
+			a = new ATM(keyin);
+			assertEquals("成功",a.Show()); 				//輸入 =3>>測試餘額查詢
+			assertEquals("登入成功",a.Key_in("1111","1234"));	//帳號密碼正確
+			
+		}
+		
+		@Test
+		public void test12() {
+			Scanner keyin = new Scanner("3\n1\n2\n4\n");
 			a = new ATM(keyin);
 			assertEquals("成功",a.Show()); 				//輸入 =3>>測試餘額查詢
 			assertEquals("登入成功",a.Key_in("1111","1234"));	//帳號密碼正確
@@ -96,21 +128,28 @@ public class ATMsystemTest {
 	//-----------存款功能測試-----------//
 		
 		@Test
-		public void test10() {
+		public void test13() {
 			Scanner keyin = new Scanner("0\n1\n3\n1\n1111\n1234\n");
 			a = new ATM(keyin);
 			assertEquals(50000,a.saveMoney(0)); 				//saveMoney =0
 		}
 		
 		@Test
-		public void test11() {
+		public void test14() {
+			Scanner keyin = new Scanner("0\n1\n1\n1\n1111\n1234\n");
+			a = new ATM(keyin);
+			assertEquals(50000,a.saveMoney(0)); 				//saveMoney =0
+		}
+		
+		@Test
+		public void test15() {
 			Scanner keyin = new Scanner("5000\n1\n3\n1\n1111\n1234\n");
 			a = new ATM(keyin);
 			assertEquals(55000,a.saveMoney(5000)); 				//saveMoney >0
 		}
 		
 		@Test
-		public void test12() {
+		public void test16() {
 			Scanner keyin = new Scanner("-10000\n1\n");
 			a = new ATM(keyin);
 			assertEquals(-1,a.saveMoney(-10000)); 				//saveMoney <0
@@ -118,7 +157,7 @@ public class ATMsystemTest {
 		
 
 		
-		// System.out.println("2017/5/28版本");
+		// System.out.println("2017/6/14版本");
 		
 //-------------------------------*/
 }
